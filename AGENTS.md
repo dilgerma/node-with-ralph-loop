@@ -570,3 +570,11 @@ For STATE_VIEW: include query endpoint docs + database table definition.
 - Fields: title, author, description, isbn, user, id (auto-generated)
 - Event: BookAdded with same fields as command plus generated ID
 
+### Available Books Slice
+- STATE_VIEW slice consuming BookAdded event
+- Read model projects only id and title fields (subset of event fields)
+- Projection pattern: evolve() returns single read model item from event
+- Query API route: GET /api/query/available-books-collection with optional _id filter
+- ui-prompt.md documents SQL schema and API contract for UI implementation
+- Tests use "spec:" prefix in test names for specification tracking
+
