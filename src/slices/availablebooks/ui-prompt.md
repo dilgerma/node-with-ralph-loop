@@ -15,7 +15,8 @@ Use table: `public.available_books`
 CREATE TABLE IF NOT EXISTS "public"."available_books"
 (
     id TEXT PRIMARY KEY,
-    title TEXT NOT NULL
+    title TEXT NOT NULL,
+    restaurant_id uuid NOT NULL
 );
 ```
 
@@ -33,11 +34,13 @@ Response:
 [
   {
     "id": "book-123",
-    "title": "The Great Gatsby"
+    "title": "The Great Gatsby",
+    "restaurant_id": "550e8400-e29b-41d4-a716-446655440000"
   },
   {
     "id": "book-456",
-    "title": "1984"
+    "title": "1984",
+    "restaurant_id": "550e8400-e29b-41d4-a716-446655440000"
   }
 ]
 ```
@@ -45,8 +48,8 @@ Response:
 ## Implementation Notes
 
 - This read model is populated by the `BookAdded` event
-- Each book entry contains only `id` and `title` fields
-- Query without `_id` parameter returns all available books
+- Each book entry contains `id`, `title`, and `restaurant_id` fields
+- Query without `_id` parameter returns all available books for the user's restaurant
 - Query with `_id` parameter returns single book matching that ID
 - Response is always an array (empty if no results)
 
@@ -54,3 +57,4 @@ Response:
 
 - `id`: Unique identifier for the book (TEXT)
 - `title`: Title of the book (TEXT, required)
+- `restaurant_id`: Restaurant/tenant identifier for multi-tenancy (UUID, required)

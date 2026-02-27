@@ -7,7 +7,9 @@
       "Bash(npm view:*)",
       "Bash(npm publish)",
       "Bash(tee:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(find:*)",
+      "Bash(npm test:*)"
     ]
   },
   "hooks": {
