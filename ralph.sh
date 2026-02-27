@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ralph - Long-running AI agent loop for event-model driven development
+# Ralph Wiggum - Long-running AI agent loop
 # Usage: ./ralph.sh [max_iterations]
 
 set -euo pipefail
@@ -7,16 +7,52 @@ set -euo pipefail
 MAX_ITERATIONS=${1:-10}
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+PRD_FILE="$SCRIPT_DIR/prd.json"
 PROGRESS_FILE="$SCRIPT_DIR/progress.txt"
 ARCHIVE_DIR="$SCRIPT_DIR/archive"
+LAST_BRANCH_FILE="$SCRIPT_DIR/.last-branch"
 
 mkdir -p "$ARCHIVE_DIR"
+
+# ------------------------------------------------------------
+# Archive previous run if branch changed
+# ------------------------------------------------------------
+if [[ -f "$PRD_FILE" && -f "$LAST_BRANCH_FILE" ]]; then
+  CURRENT_BRANCH=$(jq -r '.branchName // empty' "$PRD_FILE" 2>/dev/null || true)
+  LAST_BRANCH=$(cat "$LAST_BRANCH_FILE" 2>/dev/null || true)
+
+  if [[ -n "$CURRENT_BRANCH" && -n "$LAST_BRANCH" && "$CURRENT_BRANCH" != "$LAST_BRANCH" ]]; then
+    DATE=$(date +%Y-%m-%d)
+    FOLDER_NAME="${LAST_BRANCH#ralph/}"
+    ARCHIVE_FOLDER="$ARCHIVE_DIR/$DATE-$FOLDER_NAME"
+
+    echo "Archiving previous run: $LAST_BRANCH"
+    mkdir -p "$ARCHIVE_FOLDER"
+
+    [[ -f "$PRD_FILE" ]] && cp "$PRD_FILE" "$ARCHIVE_FOLDER/"
+    [[ -f "$PROGRESS_FILE" ]] && cp "$PROGRESS_FILE" "$ARCHIVE_FOLDER/"
+
+    echo "Archived to: $ARCHIVE_FOLDER"
+
+    echo "# Ralph Progress Log" > "$PROGRESS_FILE"
+    echo "Started: $(date)" >> "$PROGRESS_FILE"
+    echo "---" >> "$PROGRESS_FILE"
+  fi
+fi
+
+# ------------------------------------------------------------
+# Track current branch
+# ------------------------------------------------------------
+if [[ -f "$PRD_FILE" ]]; then
+  CURRENT_BRANCH=$(jq -r '.branchName // empty' "$PRD_FILE" 2>/dev/null || true)
+  [[ -n "$CURRENT_BRANCH" ]] && echo "$CURRENT_BRANCH" > "$LAST_BRANCH_FILE"
+fi
 
 # ------------------------------------------------------------
 # Init progress file
 # ------------------------------------------------------------
 if [[ ! -f "$PROGRESS_FILE" ]]; then
-  echo "# Event Model Development Progress Log" > "$PROGRESS_FILE"
+  echo "# Ralph Progress Log" > "$PROGRESS_FILE"
   echo "Started: $(date)" >> "$PROGRESS_FILE"
   echo "---" >> "$PROGRESS_FILE"
 fi
@@ -71,23 +107,9 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
   rm "$TMP_OUTPUT"
 
   if [[ -z "$OUTPUT" ]]; then
-    echo "⚠️ Claude returned no output. Retrying in 1 minute..."
+    echo "⚠️ Claude returned no output. Retrying in 1 minutes..."
     sleep 60
     continue  # retry
-  fi
-
-  # ---- Check for commit review failure -------------------
-  if echo "$OUTPUT" | grep -q "❌ COMMIT REVIEW FAILED"; then
-    echo
-    echo "⚠️  Commit review failed - workspace has been reset"
-    echo "📄 Review failure details recorded in progress.txt"
-    echo "🔄 Continuing to next iteration..."
-    echo
-    echo "Review failed at iteration $i - continuing loop" >> "$PROGRESS_FILE"
-    echo "Continuing: $(date)" >> "$PROGRESS_FILE"
-    echo "---" >> "$PROGRESS_FILE"
-    sleep 5  # Brief pause before continuing
-    continue  # Continue to next iteration
   fi
 
   # ---- Completion check -----------------------------------

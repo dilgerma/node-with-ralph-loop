@@ -25,13 +25,8 @@ If a **Current Slice** is specified (status: "in_progress"), validate that:
 
 **If current slice exists:**
 
-**WARN (approved: true) if:**
-- Most changes are in the correct slice folder
-- Some related files outside the folder are modified (utilities, types, tests)
-- Changes are cohesive and related to the slice objective
-
-**WARN MORE (approved: true) if:**
-- Significant changes outside the slice folder
+**WARN MORE (approved: false) if:**
+- Changes affect 2 slice folders in src/slices
 - Mixing slice work with unrelated changes
 - Suggest splitting the commit or focusing on the slice
 
