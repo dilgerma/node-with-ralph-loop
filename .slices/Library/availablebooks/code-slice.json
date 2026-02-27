@@ -1,0 +1,228 @@
+{
+  "id": "3458764661595862502",
+  "title": "slice: available books",
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "GENERATED-SPEC-001",
+      "sliceName": "slice: available books",
+      "type": "READMODEL",
+      "title": "should project BookAdded event to available books read model",
+      "given": [
+        {
+          "id": "GENERATED-SPEC-GIVEN-001",
+          "linkedId": "3458764661586330620",
+          "type": "EVENT",
+          "title": "Book added",
+          "fields": [
+            {
+              "name": "id",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "author",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "description",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "isbn",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "user",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ]
+        }
+      ],
+      "when": [],
+      "then": [
+        {
+          "id": "GENERATED-SPEC-THEN-001",
+          "linkedId": "3458764661594769900",
+          "type": "SPEC_READMODEL",
+          "title": "available books",
+          "fields": [
+            {
+              "name": "id",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ]
+        }
+      ],
+      "comments": [],
+      "linkedId": "GENERATED-SPEC-001"
+    },
+    {
+      "vertical": false,
+      "id": "GENERATED-SPEC-002",
+      "sliceName": "slice: available books",
+      "type": "READMODEL",
+      "title": "should handle multiple BookAdded events",
+      "given": [
+        {
+          "id": "GENERATED-SPEC-GIVEN-002",
+          "linkedId": "3458764661586330620",
+          "type": "EVENT",
+          "title": "Book added",
+          "fields": [
+            {
+              "name": "id",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "author",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "description",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "isbn",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "user",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ]
+        },
+        {
+          "id": "GENERATED-SPEC-GIVEN-003",
+          "linkedId": "3458764661586330620",
+          "type": "EVENT",
+          "title": "Book added",
+          "fields": [
+            {
+              "name": "id",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "author",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "description",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "isbn",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "user",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ]
+        }
+      ],
+      "when": [],
+      "then": [
+        {
+          "id": "GENERATED-SPEC-THEN-002",
+          "linkedId": "3458764661594769900",
+          "type": "SPEC_READMODEL",
+          "title": "available books",
+          "fields": [
+            {
+              "name": "id",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ]
+        }
+      ],
+      "comments": [],
+      "linkedId": "GENERATED-SPEC-002"
+    }
+  ]
+}

@@ -529,3 +529,44 @@ Each STATE_CHANGE slice should include `ui-prompt.md` with:
 5. Field descriptions + API client code + curl commands
 
 For STATE_VIEW: include query endpoint docs + database table definition.
+
+## Project Bootstrap (Fresh Start)
+
+### Starting from Scratch
+- When no src/ directory exists, create basic project structure manually
+- Essential files: package.json, tsconfig.json, jest.config.js
+- Core directories: src/events/, src/slices/, src/common/
+- Start with minimal dependencies - only what's needed for the first slice
+
+### Package Dependencies for Event-Driven Projects
+- Core: @event-driven-io/emmett for event sourcing patterns
+- Testing: jest, ts-jest for TypeScript testing
+- Types: @types/node, @types/jest, @types/uuid
+- Utilities: uuid for ID generation
+
+### Test Framework Setup
+- Jest with ES modules requires special configuration
+- testMatch pattern: `**/src/**/*.test.ts` to avoid unwanted test files
+- testPathIgnorePatterns: exclude .claude/ and node_modules/
+- Use ts-jest preset for TypeScript support
+
+### Event Type System
+- Create src/events/index.ts with base Event type and helper function
+- Create src/events/ContextEvents.ts with union type of all events
+- Event pattern: `Event<'EventName', { fields }, { metadata }>`
+- Use PascalCase for TypeScript types, lowercase for JSON titles
+
+### Simplified Testing Approach
+- When DeciderSpecification API is complex, use direct function calls
+- Call decide() and evolve() functions directly in tests
+- Use standard Jest expect() assertions
+- Still validates business logic without framework complexity
+
+## Library Domain (Example Context)
+
+### Add Book Slice
+- STATE_CHANGE slice with simple command → event pattern
+- No state tracking needed (empty state object)
+- Fields: title, author, description, isbn, user, id (auto-generated)
+- Event: BookAdded with same fields as command plus generated ID
+

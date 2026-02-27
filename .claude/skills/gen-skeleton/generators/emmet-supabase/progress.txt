@@ -1,0 +1,2 @@
+Step 3: Created basic project structure with package.json, tsconfig, and jest config
+Step 4: Implemented Add Book CommandHandler and test
